@@ -79,7 +79,7 @@ class Scene{
         this.images.forEach((image)=>{
             if(this.ctx){
                 console.log('rendery Cartincu!!!');
-                this.ctx.drawImage(image.image, image.x, image.y);  
+                this.ctx.drawImage(image.image, image.x, image.y, image.width, image.height);  
                 this.ctx.strokeStyle = image.strockeColor;
                 this.ctx.strokeRect(image.x, image.y, image.width, image.height);
                 this.ctx.fillStyle = image.strockeColor;

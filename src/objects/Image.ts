@@ -42,6 +42,26 @@ export default class Image{
         //this.y = point.y;
     }
 
+    setScaleX0(point:TPoint){
+        const dx = point.x-this.startPoint.x;
+        const dy = point.y-this.startPoint.y;
+        const r = Math.sqrt((dx*dx)+(dy*dy));
+        if(dx<0){
+            this.x += dx;
+            this.width += Math.abs(dx);
+            this.height += Math.abs(dx);
+            console.log('ZOOM_OUT');
+        }else{
+            this.x += dx;
+            this.width -= dx;
+            this.height -= dx;
+            console.log('ZOOM_IN');
+        }
+        this.startPoint = point;
+        console.log('r = ', r);
+        console.log('dx = ', dx, ' || dy = ', dy);
+    }
+
     calcRect(){
         this.x0 = this.x;
         this.y0 = this.y;
@@ -49,13 +69,27 @@ export default class Image{
         this.y1 = this.y + this.image.height;
     }
 
+    private click(point:TPoint){
+        this.startPoint = point;
+        this.strockeColor = this.selectStrokeColor;
+    }
+
     isOnClick(point:TPoint){
         if((point.x>=this.x0&&point.x<=this.x1)&&(point.y>=this.y0&&point.y<=this.y1)){
-            this.startPoint = point;
-            this.strockeColor = this.selectStrokeColor;
+            //this.startPoint = point;
+            //this.strockeColor = this.selectStrokeColor;
+            this.click(point);
             return true;
         }
         this.deselect();
+        return false;
+    }
+
+    isOnX0(point:TPoint){
+        if((point.x>=this.x0-2&&point.x<=this.x0+2)&&(point.y>=this.y0-2&&point.y<=this.y0+2)){
+            this.click(point);
+            return true;
+        }
         return false;
     }
 }

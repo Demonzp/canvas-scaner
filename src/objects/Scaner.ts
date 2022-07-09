@@ -19,7 +19,7 @@ export default class Scaner{
     }
 
     scane(){
-        //setTimeout(()=>{
+        setTimeout(()=>{
             const pixel = this.ctx.getImageData(this.x,this.y,1,1);
             const data = pixel.data;
 
@@ -59,7 +59,7 @@ export default class Scaner{
                 console.log('OTSKANIL!!!!');
             }
             
-        //});
+        },0);
         
     }
 }
