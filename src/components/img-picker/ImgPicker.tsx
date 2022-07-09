@@ -30,7 +30,7 @@ const ImgPicker:React.FC<Props> = ({setFile, isScan})=>{
                     <button
                         onClick={()=>refInput.current?.click()}
                     >
-                        Select Img
+                        Add Img
                     </button>
                 </>
                 :

@@ -1,5 +1,8 @@
+import React from 'react';
 import Image from './Image';
 import Mathem from './Mathem';
+import PointEvents from './PointEvents';
+import Scaner from './Scaner';
 
 class Scene{
     canvas: HTMLCanvasElement|null = null;
@@ -9,36 +12,30 @@ class Scene{
     height = 0;
     strockeColors: string[] = [];
     Mathem = new Mathem();
-    isEvent = false;
-    isPointerDown = false;
+    PointEvents: PointEvents|null = null;
+    Scaner: Scaner|null = null;
+    setSelectImage: React.Dispatch<React.SetStateAction<HTMLImageElement|null>>|null = null;
 
-    init(canvas: HTMLCanvasElement, width: number=0, height: number=0){
+    init(canvas: HTMLCanvasElement, setSelectImage: React.Dispatch<React.SetStateAction<HTMLImageElement|null>>, width: number=0, height: number=0){
         this.canvas = canvas;
         this.canvas.width = width;
         this.canvas.height = height;
         this.ctx = canvas.getContext('2d');
+        if(!this.ctx){
+            throw new Error('Not find CanvasRenderingContext2D!!!');
+        }
         this.width = width;
         this.height = height;
-        if(!this.isEvent){
-            this.canvas.addEventListener('pointerdown', ()=>{
-                console.log('start Drag!!!');
-                this.isPointerDown = true;
-            });
+        this.setSelectImage = setSelectImage;
 
-            this.canvas.addEventListener('pointerup', ()=>{
-                console.log('stop Drag!!!');
-                this.isPointerDown = false;
-            });
-
-            this.canvas.addEventListener('pointermove', (e:PointerEvent)=>{
-                //console.log('start move!!!');
-                if(this.isPointerDown){
-                    console.log("x = ", e.pageX, " || y = ", e.pageY);
-                    //console.log('start move!!!');
-                } 
-            });
-            this.isEvent = true;
+        if(!this.PointEvents){
+            this.PointEvents = new PointEvents(canvas, this);
         }
+
+        if(!this.Scaner){
+            this.Scaner = new Scaner(this);
+        }
+        
         
         this.render();
     }
@@ -61,26 +58,40 @@ class Scene{
 
     }
 
+    scane(){
+        this.Scaner?.scane();
+    }
+
+    delSelect(){
+        this.images = this.images.filter((image)=>image.defaultStrockeColor!==this.PointEvents?.selectImage?.defaultStrockeColor);
+        this.setSelectImage!(null);
+        this.PointEvents!.selectImage = undefined;
+        this.render();
+    }
+
     randomRGBA(){
         return `rgba(${this.Mathem.between(0,255)},${this.Mathem.between(0,255)},${this.Mathem.between(0,255)},1)`;
     }
 
     render(){
         console.log('render!!!');
+        this.ctx?.clearRect(0,0, this.width, this.height);
         this.images.forEach((image)=>{
             if(this.ctx){
                 console.log('rendery Cartincu!!!');
-                this.ctx.drawImage(image.image, 0, 0);  
+                this.ctx.drawImage(image.image, image.x, image.y);  
                 this.ctx.strokeStyle = image.strockeColor;
                 this.ctx.strokeRect(image.x, image.y, image.width, image.height);
                 this.ctx.fillStyle = image.strockeColor;
-                this.ctx.fillRect(0,0,5,5);
-                this.ctx.fillRect(0-5/2,image.height-5/2,5,5);
-                this.ctx.fillRect(image.width-5/2,image.height-5/2,5,5);
-                this.ctx.fillRect(image.width-5/2,0-5/2,5,5);
+                this.ctx.fillRect(image.x-5/2,image.y-5/2,5,5);
+                this.ctx.fillRect(image.x+image.width-5/2,image.y-5/2,5,5);
+                this.ctx.fillRect(image.x-5/2,image.y+image.height-5/2,5,5);
+                this.ctx.fillRect(image.x+image.width-5/2,image.y+image.height-5/2,5,5);
             }
         });
     }
 }
+
+export type TScene = Scene;
 
 export default new Scene();

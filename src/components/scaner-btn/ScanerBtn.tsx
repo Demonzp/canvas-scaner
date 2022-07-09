@@ -1,4 +1,5 @@
 import React from 'react';
+import Scene from '../../objects/Scene';
 
 type Props = {
     isScan: boolean
@@ -9,6 +10,7 @@ type Props = {
 const ScanerBtn:React.FC<Props> = ({isScan, isRender, setIsScan})=>{
     const onScan = ()=>{
         setIsScan(true);
+        Scene.scane(); 
     }
     return(
         <>

@@ -4,10 +4,11 @@ import Scene from '../../objects/Scene';
 type Props = {
     isScan: boolean,
     file: File | undefined,
-    setIsRender: React.Dispatch<React.SetStateAction<boolean>>
+    setIsRender: React.Dispatch<React.SetStateAction<boolean>>,
+    setSelectImage: React.Dispatch<React.SetStateAction<HTMLImageElement|null>>
 }
 
-const MainCanvas:React.FC<Props> = ({file, isScan, setIsRender})=>{
+const MainCanvas:React.FC<Props> = ({file, setSelectImage, setIsRender})=>{
 
     const refCanvas = useRef<HTMLCanvasElement>(null);
     //const [canvaWidth, setCanvaWidth] = useState(0);
@@ -15,7 +16,7 @@ const MainCanvas:React.FC<Props> = ({file, isScan, setIsRender})=>{
 
     useEffect(()=>{
         if(refCanvas.current){
-            Scene.init(refCanvas.current, 600, 340);
+            Scene.init(refCanvas.current, setSelectImage, 600, 340);
         }
     }, [refCanvas]);
 
@@ -25,72 +26,19 @@ const MainCanvas:React.FC<Props> = ({file, isScan, setIsRender})=>{
             img.onload = ()=>{
                 Scene.addImage(img);
                 URL.revokeObjectURL(img.src);
-               
+                setIsRender(true);
             };
 
             img.src = URL.createObjectURL(file);
         }
     }, [file]);
 
-    // useEffect(()=>{
-    //     if(file){
-    //         const ctx = refCanvas.current?.getContext('2d');
-
-    //         // if(ctx){
-    //         //     ctx.clearRect(0,0, canvaWidth, canvaHeight);
-    //         // }
-            
-    //         const img = new Image();
-
-    //         img.onload = ()=>{
-    //             setCanvaWidth(img.width);
-    //             setCanvaHeight(img.height);
-
-    //             setTimeout(()=>{
-    //                 ctx?.drawImage(img,0,0);
-    //                 URL.revokeObjectURL(img.src);
-    //                 setIsRender(true);
-    //             });
-                
-    //         };
-
-    //         img.src = URL.createObjectURL(file);
-    //     }
-    // }, [file]);
-
-    // useEffect(()=>{
-    //     if(isScan){
-    //         scaneCanvas();
-    //     }
-    // }, [isScan]);
-
-    // const scaneCanvas = ()=>{
-    //     const ctx = refCanvas.current?.getContext('2d');
-    //     const pixel = ctx?.getImageData(100,110,canvaWidth, canvaWidth);
-    //     const data = pixel?.data;
-
-    //     if(data){
-    //         console.log('color = ', data[0],'|', data[1],'|', data[2],'|', data[3]/255);
-    //     }
-    // };
-
     return(
         <>
             <canvas
                 ref={refCanvas}
+                style={{backgroundColor:'white'}}
             />
-            {/* {
-                file?
-                <canvas 
-                    ref={refCanvas}
-                    width={canvaWidth}
-                    height={canvaHeight}
-                >
-
-                </canvas>
-                :
-                null
-            } */}
         </>
         
     );
