@@ -5,10 +5,11 @@ import ModalBody from '../modal-body';
 import ModalWin from '../modal-win';
 
 type Props = {
+    isScan: boolean;
     selectImage: HTMLImageElement|null;
 }
 
-const ActionBtns:React.FC<Props> = ({selectImage})=>{
+const ActionBtns:React.FC<Props> = ({selectImage, isScan})=>{
     const [inputWidth, setInputWidth] = useState('0');
     const [inputHeight, setInputHeight] = useState('0');
     const [percent, setPercent] = useState('1');
@@ -62,7 +63,7 @@ const ActionBtns:React.FC<Props> = ({selectImage})=>{
                 </ModalBody>
             </ModalWin>
             {
-                selectImage?
+                (selectImage && !isScan)?
                 <>
                     <button onClick={onDel}>Del</button>
                     <button onClick={onCopy}>Copy</button>

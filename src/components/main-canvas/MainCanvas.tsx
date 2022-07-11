@@ -1,14 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Scene from '../../objects/Scene';
+import { TScanDot } from '../../types/geom';
 
 type Props = {
-    isScan: boolean,
-    file: File | undefined,
-    setIsRender: React.Dispatch<React.SetStateAction<boolean>>,
-    setSelectImage: React.Dispatch<React.SetStateAction<HTMLImageElement|null>>
+    isScan: boolean;
+    file: File | undefined;
+    setIsRender: React.Dispatch<React.SetStateAction<boolean>>;
+    setSelectImage: React.Dispatch<React.SetStateAction<HTMLImageElement|null>>;
+    setComplateScane: (data:TScanDot[])=>void;
 }
 
-const MainCanvas:React.FC<Props> = ({file, setSelectImage, setIsRender})=>{
+const MainCanvas:React.FC<Props> = ({file, setSelectImage, setIsRender, setComplateScane})=>{
 
     const refCanvas = useRef<HTMLCanvasElement>(null);
     //const [canvaWidth, setCanvaWidth] = useState(0);
@@ -16,7 +18,7 @@ const MainCanvas:React.FC<Props> = ({file, setSelectImage, setIsRender})=>{
 
     useEffect(()=>{
         if(refCanvas.current){
-            Scene.init(refCanvas.current, setSelectImage, 600, 340);
+            Scene.init(refCanvas.current, setSelectImage, setComplateScane, 600, 340);
         }
     }, [refCanvas]);
 

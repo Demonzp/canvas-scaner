@@ -1,5 +1,5 @@
 import React from 'react';
-import { TTransformData } from '../types/geom';
+import { TScanDot, TTransformData } from '../types/geom';
 import Image from './Image';
 import Mathem from './Mathem';
 import PointEvents from './PointEvents';
@@ -16,8 +16,15 @@ class Scene{
     PointEvents: PointEvents|null = null;
     Scaner: Scaner|null = null;
     setSelectImage: React.Dispatch<React.SetStateAction<HTMLImageElement|null>>|null = null;
+    setComplateScane: ((data:TScanDot[])=>void) | null = null;
 
-    init(canvas: HTMLCanvasElement, setSelectImage: React.Dispatch<React.SetStateAction<HTMLImageElement|null>>, width: number=0, height: number=0){
+    init(canvas: HTMLCanvasElement, 
+        setSelectImage: React.Dispatch<React.SetStateAction<HTMLImageElement|null>>, 
+        setComplateScane: (data:TScanDot[])=>void, 
+        width: number=0, 
+        height: 
+        number=0
+    ){
         this.canvas = canvas;
         this.canvas.width = width;
         this.canvas.height = height;
@@ -28,7 +35,7 @@ class Scene{
         this.width = width;
         this.height = height;
         this.setSelectImage = setSelectImage;
-
+        this.setComplateScane = setComplateScane
         if(!this.PointEvents){
             this.PointEvents = new PointEvents(canvas, this);
         }

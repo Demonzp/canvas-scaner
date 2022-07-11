@@ -1,10 +1,11 @@
 import React from 'react';
 import Scene from '../../objects/Scene';
+import { TScanDot } from '../../types/geom';
 
 type Props = {
-    isScan: boolean
-    isRender: boolean
-    setIsScan: React.Dispatch<React.SetStateAction<boolean>>
+    isScan: boolean;
+    isRender: boolean;
+    setIsScan: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ScanerBtn:React.FC<Props> = ({isScan, isRender, setIsScan})=>{
@@ -12,6 +13,7 @@ const ScanerBtn:React.FC<Props> = ({isScan, isRender, setIsScan})=>{
         setIsScan(true);
         Scene.scane(); 
     }
+
     return(
         <>
             {

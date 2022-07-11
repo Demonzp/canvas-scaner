@@ -8,7 +8,7 @@ export default class Scaner{
     x = 0;
     y = 0;
     defaultStepY = 6;
-    stepX = 12;
+    stepX = 10;
     stepY = 1;
     dots:TScanDot[] = [];
     circle = new Path2D();
@@ -23,7 +23,7 @@ export default class Scaner{
         const data = pixel.data;
 
         const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3]/255})`;
-        console.log('rgba = ', rgba);
+        //console.log('rgba = ', rgba);
         if(rgba==='rgba(0, 0, 0, 1)'){
             
 
@@ -75,6 +75,8 @@ export default class Scaner{
             }
         }
         console.log('CONSHIL!!!!!!!!!!!!!!');
+        this.scene.setComplateScane!(this.dots);
+        this.dots = [];
     }
 
     scane2(){
