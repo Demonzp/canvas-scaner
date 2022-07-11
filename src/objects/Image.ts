@@ -1,4 +1,4 @@
-import { TPoint } from '../types/geom';
+import { TPoint, TTransformData } from '../types/geom';
 
 export default class Image{
     image: HTMLImageElement;
@@ -86,6 +86,18 @@ export default class Image{
     private click(point:TPoint){
         this.startPoint = point;
         this.strockeColor = this.selectStrokeColor;
+    }
+
+    transform(data:TTransformData){
+        if(data.percent!==1){
+            this.width = this.width*data.percent;
+            this.height = this.height*data.percent;
+        }else{
+            this.width = data.width;
+            this.height = data.height;
+        }
+
+        this.calcRect();
     }
 
     isOnClick(point:TPoint){

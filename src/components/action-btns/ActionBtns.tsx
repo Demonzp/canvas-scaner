@@ -9,9 +9,9 @@ type Props = {
 }
 
 const ActionBtns:React.FC<Props> = ({selectImage})=>{
-    const [inputWidth, setInputWidth] = useState(0);
-    const [inputHeight, setInputHeight] = useState(0);
-    const [percent, setPercent] = useState(1);
+    const [inputWidth, setInputWidth] = useState('0');
+    const [inputHeight, setInputHeight] = useState('0');
+    const [percent, setPercent] = useState('1');
 
     const [show, setShow] = useState(false);
     const toggle = ()=>setShow(!show);
@@ -27,9 +27,14 @@ const ActionBtns:React.FC<Props> = ({selectImage})=>{
     const openModal = ()=>{
         toggle();
         if(Scene.PointEvents && Scene.PointEvents.selectImage){
-            setInputHeight(Scene.PointEvents.selectImage.height);
-            setInputWidth(Scene.PointEvents.selectImage.width);
+            setInputHeight(String(Scene.PointEvents.selectImage.height));
+            setInputWidth(String(Scene.PointEvents.selectImage.width));
         } 
+    };
+
+    const onTransform = ()=>{
+        Scene.transformSelect({percent: parseFloat(percent), width: parseFloat(inputWidth), height: parseFloat(inputHeight)});
+        toggle();
     };
 
     return(
@@ -37,21 +42,21 @@ const ActionBtns:React.FC<Props> = ({selectImage})=>{
             <ModalWin show={show} toggle={toggle}>
                 <ModalBody>
                     <div>
-                        <label htmlFor='percent'>Procent to ZOOM_IN/ZOOM_OUT:</label>
-                        <input name='percent'/>
+                        <label htmlFor='percent'>Procent to ZOOM_IN(1.2)/ZOOM_OUT(0.8):</label>
+                        <input name='percent' value={percent} onChange={(e)=>setPercent(e.target.value)}/>
                     </div>
                     <div>
                         <div>
                             <label htmlFor='width'>Width:</label>
-                            <input name='width' value={inputWidth} onChange={(e)=>setInputWidth(Number(e.target.value))}/>
+                            <input name='width' value={inputWidth} onChange={(e)=>setInputWidth(e.target.value)}/>
                         </div>
                         <div>
                             <label htmlFor='height'>Height:</label>
-                            <input name='height' value={inputHeight} onChange={(e)=>setInputHeight(Number(e.target.value))}/>
+                            <input name='height' value={inputHeight} onChange={(e)=>setInputHeight(e.target.value)}/>
                         </div>
                     </div>
                     <ModalAction>
-                        <button>save</button>
+                        <button onClick={onTransform}>save</button>
                         <button onClick={toggle}>cancel</button>
                     </ModalAction>
                 </ModalBody>

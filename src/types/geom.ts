@@ -8,3 +8,9 @@ export type TScanDot={
     x: number,
     y: number
 }
+
+export type TTransformData ={
+    percent: number;
+    width: number;
+    height: number;
+}

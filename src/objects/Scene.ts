@@ -1,4 +1,5 @@
 import React from 'react';
+import { TTransformData } from '../types/geom';
 import Image from './Image';
 import Mathem from './Mathem';
 import PointEvents from './PointEvents';
@@ -67,6 +68,13 @@ class Scene{
         this.setSelectImage!(null);
         this.PointEvents!.selectImage = undefined;
         this.render();
+    }
+
+    transformSelect(data:TTransformData){
+        if(this.PointEvents && this.PointEvents.selectImage){
+            this.PointEvents.selectImage.transform(data);
+            this.render();
+        }
     }
 
     copySelect(){
