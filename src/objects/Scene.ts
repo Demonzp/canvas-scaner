@@ -69,6 +69,30 @@ class Scene{
         this.render();
     }
 
+    copySelect(){
+        let strockeColor = 'rgba(0,0,255,1)';
+
+        while (this.strockeColors.find(color=>color===strockeColor)){
+            strockeColor = this.randomRGBA();
+        }
+        this.strockeColors.push(strockeColor);
+
+        if(this.PointEvents && this.PointEvents.selectImage){
+            this.images.push(
+                new Image(
+                    this.PointEvents.selectImage.image,
+                    strockeColor,
+                    10,
+                    10,
+                    this.PointEvents.selectImage.width,
+                    this.PointEvents.selectImage.height
+                )
+            );
+            this.render();
+        }
+        
+    }
+
     randomRGBA(){
         return `rgba(${this.Mathem.between(0,255)},${this.Mathem.between(0,255)},${this.Mathem.between(0,255)},1)`;
     }

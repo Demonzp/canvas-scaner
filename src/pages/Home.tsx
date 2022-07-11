@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import BtnDel from '../components/btn-del';
+import ActionBtns from '../components/action-btns';
 import ImgPicker from '../components/img-picker';
 import MainCanvas from '../components/main-canvas';
 import ScanerBtn from '../components/scaner-btn';
@@ -15,7 +15,7 @@ const Home = ()=>{
             <MainCanvas isScan={isScan} file={file} setIsRender={setIsRender} setSelectImage={setSelectImage}/>
             <ImgPicker setFile={setFile} isScan={isScan}/>
             <ScanerBtn isScan={isScan} isRender={isRender} setIsScan={setIsScan}/>
-            <BtnDel selectImage={selectImage}/>
+            <ActionBtns selectImage={selectImage}/>
         </>
     );
 };

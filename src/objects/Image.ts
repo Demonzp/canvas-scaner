@@ -4,8 +4,8 @@ export default class Image{
     image: HTMLImageElement;
     width = 0;
     height = 0;
-    x = 10;
-    y = 10;
+    x = 0;
+    y = 0;
     startPoint:TPoint = {x:0,y:0};
     x0 = 0;
     y0 = 0;
@@ -15,11 +15,24 @@ export default class Image{
     strockeColor: string;
     selectStrokeColor:string = 'rgba(1,148,19,1)';
 
-    constructor(image:HTMLImageElement, strockeColor:string){
+    constructor(image:HTMLImageElement, strockeColor:string, x: number = 10, y: number = 10, width:number = 0, height:number = 0){
         //console.log('image = ', image);
+        this.x = x;
+        this.y = y;
         this.image = image;
-        this.width = image.width;
-        this.height = image.height;
+
+        if(width>0){
+            this.width = width;
+        }else{
+            this.width = image.width;
+        }
+        
+        if(height>0){
+            this.height = height;
+        }else{
+            this.height = image.height;
+        }
+        
         
         this.strockeColor = strockeColor;
         this.defaultStrockeColor = strockeColor;
@@ -58,6 +71,7 @@ export default class Image{
             console.log('ZOOM_IN');
         }
         this.startPoint = point;
+        this.calcRect();
         console.log('r = ', r);
         console.log('dx = ', dx, ' || dy = ', dy);
     }
@@ -65,8 +79,8 @@ export default class Image{
     calcRect(){
         this.x0 = this.x;
         this.y0 = this.y;
-        this.x1 = this.x + this.image.width;
-        this.y1 = this.y + this.image.height;
+        this.x1 = this.x + this.width;
+        this.y1 = this.y + this.height;
     }
 
     private click(point:TPoint){
