@@ -14,3 +14,11 @@ export type TTransformData ={
     width: number;
     height: number;
 }
+
+export type TColorData = {
+    rgba: string;
+    r: number;
+    g: number;
+    b: number;
+    a: number;
+}

@@ -7,9 +7,10 @@ import ModalWin from '../modal-win';
 type Props = {
     isScan: boolean;
     selectImage: HTMLImageElement|null;
+    isPickedColor: boolean;
 }
 
-const ActionBtns:React.FC<Props> = ({selectImage, isScan})=>{
+const ActionBtns:React.FC<Props> = ({selectImage, isScan, isPickedColor})=>{
     const [inputWidth, setInputWidth] = useState('0');
     const [inputHeight, setInputHeight] = useState('0');
     const [percent, setPercent] = useState('1');
@@ -36,6 +37,10 @@ const ActionBtns:React.FC<Props> = ({selectImage, isScan})=>{
     const onTransform = ()=>{
         Scene.transformSelect({percent: parseFloat(percent), width: parseFloat(inputWidth), height: parseFloat(inputHeight)});
         toggle();
+    };
+
+    const onPickColor = ()=>{
+        Scene.pickColor();
     };
 
     return(
@@ -73,6 +78,13 @@ const ActionBtns:React.FC<Props> = ({selectImage, isScan})=>{
                 :
                 null
             }
+            {
+                !isPickedColor?
+                <button onClick={onPickColor}>Pick Color</button>
+                :
+                null
+            }
+            
         </>
     );
 };

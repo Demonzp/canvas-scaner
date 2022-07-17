@@ -17,13 +17,15 @@ class Scene{
     Scaner: Scaner|null = null;
     setSelectImage: React.Dispatch<React.SetStateAction<HTMLImageElement|null>>|null = null;
     setComplateScane: ((data:TScanDot[])=>void) | null = null;
+    setPickedColor: React.Dispatch<React.SetStateAction<boolean>>|null = null;
+    isPickColor: boolean = false;
 
     init(canvas: HTMLCanvasElement, 
         setSelectImage: React.Dispatch<React.SetStateAction<HTMLImageElement|null>>, 
         setComplateScane: (data:TScanDot[])=>void, 
+        setPickedColor: React.Dispatch<React.SetStateAction<boolean>>|null,
         width: number=0, 
-        height: 
-        number=0
+        height: number=0
     ){
         this.canvas = canvas;
         this.canvas.width = width;
@@ -35,7 +37,8 @@ class Scene{
         this.width = width;
         this.height = height;
         this.setSelectImage = setSelectImage;
-        this.setComplateScane = setComplateScane
+        this.setComplateScane = setComplateScane;
+        this.setPickedColor = setPickedColor;
         if(!this.PointEvents){
             this.PointEvents = new PointEvents(canvas, this);
         }
@@ -82,6 +85,11 @@ class Scene{
             this.PointEvents.selectImage.transform(data);
             this.render();
         }
+    }
+
+    pickColor(){
+        this.setPickedColor!(false);
+        this.isPickColor = true;
     }
 
     copySelect(){

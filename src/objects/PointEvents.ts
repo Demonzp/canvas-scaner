@@ -24,6 +24,12 @@ export default class PointEvents{
 
             this.canvas.addEventListener('pointerdown', (e:PointerEvent)=>{
                 console.log('start Drag!!!');
+                if(this.scene.isPickColor){
+                    const colorData = this.scene.Scaner?.scanePoint({x:e.pageX, y:e.pageY});
+                    console.log('colorData = ', colorData);
+                    this.scene.setPickedColor!(true);
+                    return;
+                }
                 this.isPointerDown = true;
                 const point = {x:e.pageX, y:e.pageY};
                 this.scene.images.forEach((image)=>image.deselect());

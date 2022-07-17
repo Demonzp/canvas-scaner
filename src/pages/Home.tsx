@@ -11,6 +11,7 @@ const Home = ()=>{
     const [isScan, setIsScan] = useState(false);
     const [selectImage, setSelectImage] = useState<HTMLImageElement|null>(null);
     const [complateScane, setComplateScane] = useState<TScanDot[]>([]);
+    const [isPickedColor, setPickedColor] = useState<boolean>(false);
 
     const onSetComplateScane = (data: TScanDot[])=>{
         setComplateScane(data);
@@ -32,10 +33,17 @@ const Home = ()=>{
 
     return(
         <>
-            <MainCanvas isScan={isScan} file={file} setIsRender={setIsRender} setSelectImage={setSelectImage} setComplateScane={onSetComplateScane}/>
+            <MainCanvas 
+                isScan={isScan} 
+                file={file} 
+                setIsRender={setIsRender} 
+                setSelectImage={setSelectImage} 
+                setComplateScane={onSetComplateScane}
+                setPickedColor = {setPickedColor}
+            />
             <ImgPicker setFile={setFile} isScan={isScan}/>
             <ScanerBtn isScan={isScan} isRender={isRender} setIsScan={setIsScan}/>
-            <ActionBtns isScan={isScan} selectImage={selectImage}/>
+            <ActionBtns isScan={isScan} selectImage={selectImage} isPickedColor={isPickedColor}/>
         </>
     );
 };
