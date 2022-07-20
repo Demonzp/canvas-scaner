@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Scene from '../../objects/Scene';
 import { TScanDot } from '../../types/geom';
 

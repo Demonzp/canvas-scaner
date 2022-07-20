@@ -15,7 +15,7 @@ export default class Image{
     strockeColor: string;
     selectStrokeColor:string = 'rgba(1,148,19,1)';
 
-    constructor(image:HTMLImageElement, strockeColor:string, x: number = 10, y: number = 10, width:number = 0, height:number = 0){
+    constructor(image:HTMLImageElement, strockeColor:string, x: number = 0, y: number = 0, width:number = 0, height:number = 0){
         //console.log('image = ', image);
         this.x = x;
         this.y = y;

@@ -1,4 +1,3 @@
-import { nextTick } from 'process';
 import { createId } from '../services/generId';
 import { TColorData, TPoint, TScanDot } from '../types/geom';
 import { TScene } from './Scene';
@@ -8,7 +7,7 @@ export default class Scaner{
     ctx: CanvasRenderingContext2D;
     x = 0;
     y = 0;
-    step = 20;
+    step = 4;
     // defaultStepY = 6;
     // stepX = 8;
     // stepY = 1;
@@ -74,29 +73,38 @@ export default class Scaner{
                     let resultPrevY = this.compare(x,y-1);
                     if(!resultPrevY){
                         compY+=2;
-                    }else{
-                        isRender = false;
                     }
 
-                    
-                    //resultPrevY = this.compare(x-this.step/2, compY-this.step/2);
-                    const dotPrevY = this.dots.find(dot=>(dot.x<x-this.step/2&&dot.x>x-(this.step/2+1))&&(dot.y<compY-this.step/2&&dot.y>compY-(this.step/2+1)));
+                    //const resultNextX = this.compare(x+1,compY);
 
-                    if(dotPrevY){
-                        isRender = false;
+                    const dotPrev = this.dots.find(dot=>{
+                        if((dot.x>=x-this.step&&dot.x<=x+this.step)&&(dot.y>=compY-this.step&&dot.y<=compY)){
+                            return true;
+                        }
+                        return false;
+                    });
+
+                    if(dotPrev){
+                        //console.log('ne dolghe risovat!!!!!!!! = ', resultNextX);
+                        //if(resultNextX){
+                            isRender = false;
+                        //}
                     }
 
                     if(isRender){
+                        // if(!resultNextX){
+                        //     x-=2;
+                        // }
                         this.dots.push({
                             id: createId(8),
                             x,
                             y:compY
                         });
             
-                        this.circle.moveTo(x, compY);
-                        this.circle.arc(x, compY, 5, 0, 2 * Math.PI);
-                        this.ctx.fillStyle = 'red';
-                        this.ctx.fill(this.circle);
+                        // this.circle.moveTo(x, compY);
+                        // this.circle.arc(x, compY, 5, 0, 2 * Math.PI);
+                        // this.ctx.fillStyle = 'red';
+                        // this.ctx.fill(this.circle);
     
                         x = x+this.step;
                         let stepX = this.step;
@@ -124,6 +132,13 @@ export default class Scaner{
             //     this.stepY = this.defaultStepY;
             // }
         }
+
+        this.dots.forEach(dot=>{
+            this.circle!.moveTo(dot.x, dot.y);
+            this.circle!.arc(dot.x, dot.y, 5, 0, 2 * Math.PI);
+            this.ctx.fillStyle = 'red';
+            this.ctx.fill(this.circle!);
+        });
         console.log('CONSHIL!!!!!!!!!!!!!!');
         this.scene.setComplateScane!(this.dots);
         this.dots = [];
