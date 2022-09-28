@@ -19,7 +19,7 @@ const MainCanvas:React.FC<Props> = ({file, setSelectImage, setIsRender, setCompl
 
     useEffect(()=>{
         if(refCanvas.current){
-            Scene.init(refCanvas.current, setSelectImage, setComplateScane, setPickedColor, 600, 340);
+            Scene.init(refCanvas.current, setSelectImage, setComplateScane, setPickedColor, 640, 300);
         }
     }, [refCanvas]);
 

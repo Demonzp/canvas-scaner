@@ -47,8 +47,42 @@ class Scene{
             this.Scaner = new Scaner(this);
         }
         
-        
+
         this.render();
+    }
+
+    renderText(){
+        console.log('renderText');
+        const text = `ДЯКУЮ`;
+        //const text2 = "";
+        //this.ctx!.font = "56px 'Press Start 2P', cursive";
+        this.ctx!.font = "expanded 66px 'Press Start 2P', cursive";
+        this.ctx!.fillText(text, 12, 80);
+        //this.ctx!.fillText(text2, 12, 140);
+        //351
+        //241
+        
+        // const text2 = "HELLO";
+        // this.ctx!.font = "38px 'Press Start 2P', cursive";
+        // console.log('textSizes = ', measureText);
+        // this.ctx!.fillText(text2, 10, 90);
+        // this.ctx!.strokeStyle = 'red';
+        // this.ctx!.lineWidth = 1;
+        // this.ctx!.beginPath();
+        // this.ctx!.moveTo(10, 50-measureText.actualBoundingBoxAscent);
+        // this.ctx!.lineTo(10+measureText.width+measureText.actualBoundingBoxDescent, 50-measureText.actualBoundingBoxAscent);
+        
+        // this.ctx!.closePath();
+        // this.ctx!.stroke();
+
+        // this.ctx!.strokeStyle = 'green';
+        // this.ctx!.lineWidth = 1;
+        // this.ctx!.beginPath();
+        // this.ctx!.moveTo(10, 50-measureText.actualBoundingBoxAscent+(measureText.actualBoundingBoxDescent/2));
+        // this.ctx!.lineTo(10+measureText.width+measureText.actualBoundingBoxDescent, 50-measureText.actualBoundingBoxAscent+(measureText.actualBoundingBoxDescent/2));
+        
+        // this.ctx!.closePath();
+        // this.ctx!.stroke();
     }
 
     addImage(image:HTMLImageElement){
@@ -67,6 +101,14 @@ class Scene{
             this.render();
         //});
 
+    }
+
+    scanerImgLikePixel(){
+        this.Scaner?.scanerImgLikePixel();
+    }
+
+    scaneText(){
+        this.Scaner?.scaneText();
     }
 
     scane(){
@@ -123,8 +165,10 @@ class Scene{
     render(){
         console.log('render!!!');
         this.ctx?.clearRect(0,0, this.width, this.height);
+        //this.renderText();
         this.images.forEach((image)=>{
             if(this.ctx){
+                
                 console.log('rendery Cartincu!!!');
                 this.ctx.drawImage(image.image, image.x, image.y, image.width, image.height);  
                 this.ctx.strokeStyle = image.strockeColor;

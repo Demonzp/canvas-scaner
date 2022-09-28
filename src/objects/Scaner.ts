@@ -7,7 +7,7 @@ export default class Scaner{
     ctx: CanvasRenderingContext2D;
     x = 0;
     y = 0;
-    step = 4;
+    step = 9;
     // defaultStepY = 6;
     // stepX = 8;
     // stepY = 1;
@@ -54,6 +54,114 @@ export default class Scaner{
 
     scanePoint(point: TPoint):TColorData{
         return this.getColor(point);
+    }
+
+    scanerImgLikePixel(){
+        this.circle = new Path2D();
+        const x0 = 0;
+        const y0 = 0;
+        const step = 8;
+        let i = 0;
+        let j = 0;
+
+        const width = 540;
+        const height = 242;
+        const renderDots = [];
+        //let startX = -1;
+        //let startY = -1;
+        for (let y = y0; y < height; y+=step) {
+            console.log(y,'||',j);
+            for (let x = x0; x < width; x+=step) {
+             const result = this.compare(x, y);
+             if(result){
+                this.dots.push({
+                    id: createId(8),
+                    x:i,
+                    y:j
+                });
+                renderDots.push({
+                    id: createId(8),
+                    x,
+                    y
+                });
+             }
+             i++;
+            }
+            i=0;
+            j++;
+        }
+
+        const startX = Math.min.apply(null, this.dots.map(obj=>{return obj.x}));
+        const startY = Math.min.apply(null, this.dots.map(obj=>{return obj.y}));
+
+        this.dots = this.dots.map((obj)=>{
+            return{
+                id: obj.id,
+                x: obj.x-startX,
+                y: obj.y-startY
+            }
+        });
+        
+        console.log('CONSHIL!!!!!!!!!!!!!! = scanerImgLikePixel', this.dots);
+
+        renderDots.forEach(dot=>{
+            this.circle!.moveTo(dot.x, dot.y);
+            this.circle!.arc(dot.x, dot.y, 5, 0, 2 * Math.PI);
+            this.ctx.fillStyle = 'red';
+            this.ctx.fill(this.circle!);
+        });
+        
+        this.scene.setComplateScane!(this.dots);
+        this.dots = [];
+    }
+
+    scaneText(){
+        this.circle = new Path2D();
+        const text = "ДЯКУЮ";
+        const measureText = this.ctx!.measureText(text);
+        console.log('textSizes = ', measureText);
+        console.log('textSizes = ', Math.ceil(56/10));
+        const x0 = 12;
+        const y0 = 80-measureText.actualBoundingBoxAscent;
+        const step = Math.ceil(measureText.actualBoundingBoxAscent/10);
+        let i = 0;
+        let j = 0;
+
+        const width = 12 + measureText.width+measureText.actualBoundingBoxDescent;
+        const height = 80 + measureText.actualBoundingBoxAscent;
+        const renderDots = [];
+        console.log('step = ', step);
+        for (let y = y0; y < height; y+=7) {
+           for (let x = x0; x < width; x+=7) {
+            const result = this.compare(x, y);
+            if(result){
+                this.dots.push({
+                    id: createId(8),
+                    x:i,
+                    y:j
+                });
+                renderDots.push({
+                    id: createId(8),
+                    x,
+                    y
+                });
+            }
+            i++;
+           }
+           i=0;
+           j++;
+        }
+        console.log('CONSHIL!!!!!!!!!!!!!! = ', this.dots);
+
+        renderDots.forEach(dot=>{
+            this.circle!.moveTo(dot.x, dot.y);
+            this.circle!.arc(dot.x, dot.y, 5, 0, 2 * Math.PI);
+            this.ctx.fillStyle = 'red';
+            this.ctx.fill(this.circle!);
+        });
+        
+        this.scene.setComplateScane!(this.dots);
+        this.dots = [];
     }
 
     scane(){
