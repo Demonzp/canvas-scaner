@@ -164,6 +164,56 @@ export default class Scaner{
         this.dots = [];
     }
 
+    scanePolygon(){
+        this.circle = new Path2D();
+        const widthStep = 47;
+        const heightStep = 25;
+        const numCols = this.scene.width/widthStep;
+        const numRows = this.scene.height/heightStep;
+        let x = 0;
+        let y = 0;
+
+        const arr = [];
+        const renderDots = [];
+        for (let i = 0; i < numCols; i++) {
+            for (let j = 0; j < numRows; j++) {
+                const x1 = x;
+                const x2 = x + widthStep;
+                const y1 = y;
+                const y2 = y + heightStep;
+
+                // x1, y1,
+                // x2, y1,
+                // x1, y2,
+
+                // x1, y2,
+                // x2, y1,
+                // x2, y2,
+                renderDots.push({
+                    id: createId(12),
+                    x,
+                    y
+                });
+                arr.push(x1,y1,x2,y1,x1,y2,x1,y2,x2,y1,x2,y2);
+                y += heightStep;
+            }
+
+            y = 0;
+
+            x += widthStep;
+        }
+
+        renderDots.forEach(dot=>{
+            this.circle!.moveTo(dot.x, dot.y);
+            this.circle!.arc(dot.x, dot.y, 5, 0, 2 * Math.PI);
+            this.ctx.fillStyle = 'red';
+            this.ctx.fill(this.circle!);
+        });
+        console.log('arr.length = ', arr.length);
+        this.scene.setComplateScane2!(arr);
+
+    }
+
     scane(){
         this.circle = new Path2D();
         //this.circle2 = new Path2D();

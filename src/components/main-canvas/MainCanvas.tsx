@@ -8,10 +8,11 @@ type Props = {
     setIsRender: React.Dispatch<React.SetStateAction<boolean>>;
     setSelectImage: React.Dispatch<React.SetStateAction<HTMLImageElement|null>>;
     setComplateScane: (data:TScanDot[])=>void;
+    setComplateScane2: (data: any[])=>void;
     setPickedColor: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const MainCanvas:React.FC<Props> = ({file, setSelectImage, setIsRender, setComplateScane, setPickedColor})=>{
+const MainCanvas:React.FC<Props> = ({file, setSelectImage, setIsRender, setComplateScane, setComplateScane2, setPickedColor})=>{
 
     const refCanvas = useRef<HTMLCanvasElement>(null);
     //const [canvaWidth, setCanvaWidth] = useState(0);
@@ -19,7 +20,7 @@ const MainCanvas:React.FC<Props> = ({file, setSelectImage, setIsRender, setCompl
 
     useEffect(()=>{
         if(refCanvas.current){
-            Scene.init(refCanvas.current, setSelectImage, setComplateScane, setPickedColor, 640, 300);
+            Scene.init(refCanvas.current, setSelectImage, setComplateScane, setComplateScane2, setPickedColor, 680, 800);
         }
     }, [refCanvas]);
 

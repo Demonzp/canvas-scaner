@@ -11,10 +11,11 @@ const Home = ()=>{
     const [isScan, setIsScan] = useState(false);
     const [selectImage, setSelectImage] = useState<HTMLImageElement|null>(null);
     const [complateScane, setComplateScane] = useState<TScanDot[]>([]);
+    //const [_, setComplateScane2] = useState<any[]>([]);
     const [isPickedColor, setPickedColor] = useState<boolean>(false);
 
-    const onSetComplateScane = (data: TScanDot[])=>{
-        setComplateScane(data);
+    const onSetComplateScane = (data: any[])=>{
+        //setComplateScane(data);
         setIsScan(false);
         const file = new Blob([JSON.stringify(data)], {type: 'aplication/json'});
         const link = document.createElement('a');
@@ -39,6 +40,7 @@ const Home = ()=>{
                 setIsRender={setIsRender} 
                 setSelectImage={setSelectImage} 
                 setComplateScane={onSetComplateScane}
+                setComplateScane2={onSetComplateScane}
                 setPickedColor = {setPickedColor}
             />
             <ImgPicker setFile={setFile} isScan={isScan}/>
