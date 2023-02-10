@@ -214,6 +214,73 @@ export default class Scaner{
 
     }
 
+    simpleScane(){
+        const stepX = 8;
+        const stepY = 8;
+        this.circle = new Path2D();
+        let isDot = false;
+        for(let y=0; y<=this.scene.height; y++){
+            for(let x=0; x<=this.scene.width; x++){
+                
+                const result = this.compare(x, y);
+                if(result){
+                    const maxStep = stepX/2;
+                    let step = maxStep;
+                    let i = 1;
+                    let isWhile = true;
+                    let toBack = false;
+                    while (isWhile){
+                        let tempX = x+i;
+                        const res = this.compare(tempX, y);
+                        if(!res){
+                            toBack = true;
+                            isWhile = false;
+                        }
+                        if(i>=maxStep){
+                            isWhile = false;
+                        }
+                        i++;
+                        step--;
+                    }
+                    //let tempY = y+1;
+                    if(toBack){
+                        this.dots.push({
+                            id: createId(8),
+                            x:x-step,
+                            y:y
+                        });
+                    }else{
+                        this.dots.push({
+                            id: createId(8),
+                            x:x+stepX/2,
+                            y:y
+                        });
+                    }
+                    isDot = true;
+                    x+=stepX;
+                }
+
+            }
+
+            if(isDot){
+                isDot = false;
+                y+=stepY;
+            }
+        }
+
+        this.dots.forEach(dot=>{
+            this.circle!.moveTo(dot.x, dot.y);
+            this.circle!.arc(dot.x, dot.y, 3, 0, 2 * Math.PI);
+            this.ctx.fillStyle = 'red';
+            this.ctx.fill(this.circle!);
+        });
+
+        console.log('dots = ', this.dots);
+        this.scene.setComplateScane!(this.dots);
+        this.dots = [];
+
+    }
+
     scane(){
         this.circle = new Path2D();
         //this.circle2 = new Path2D();
@@ -258,11 +325,6 @@ export default class Scaner{
                             x,
                             y:compY
                         });
-            
-                        // this.circle.moveTo(x, compY);
-                        // this.circle.arc(x, compY, 5, 0, 2 * Math.PI);
-                        // this.ctx.fillStyle = 'red';
-                        // this.ctx.fill(this.circle);
     
                         x = x+this.step;
                         let stepX = this.step;

@@ -26,11 +26,16 @@ const ScanerBtn:React.FC<Props> = ({isScan, isRender, setIsScan})=>{
         Scene.scanePolygon();
     };
 
+    const onSimpleScane = ()=>{
+        Scene.simpleScane();
+    };
+
     return(
         <>
         <button onClick={onScanPolygon}>Scan for polygon</button>
         <button onClick={onScaneText}>Scan Text</button>
         <button onClick={onScaneIMGPixel}>Scan IMG Like Pixel</button>
+        <button onClick={onSimpleScane}>Simple Scan</button>
             {
                 isRender?
                 <button 

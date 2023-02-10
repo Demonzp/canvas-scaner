@@ -32,7 +32,7 @@ class Scene{
         this.canvas = canvas;
         this.canvas.width = width;
         this.canvas.height = height;
-        this.ctx = canvas.getContext('2d');
+        this.ctx = canvas.getContext('2d',{ willReadFrequently: true });
         if(!this.ctx){
             throw new Error('Not find CanvasRenderingContext2D!!!');
         }
@@ -116,6 +116,10 @@ class Scene{
 
     scanePolygon(){
         this.Scaner?.scanePolygon();
+    }
+
+    simpleScane(){
+        this.Scaner?.simpleScane();
     }
 
     scane(){
