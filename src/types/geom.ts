@@ -6,7 +6,8 @@ export type TPoint={
 export type TScanDot={
     id: string,
     x: number,
-    y: number
+    y: number,
+    angle: number
 }
 
 export type TTransformData ={

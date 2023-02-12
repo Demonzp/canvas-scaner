@@ -77,7 +77,8 @@ export default class Scaner{
                 this.dots.push({
                     id: createId(8),
                     x:i,
-                    y:j
+                    y:j,
+                    angle: 0
                 });
                 renderDots.push({
                     id: createId(8),
@@ -98,7 +99,8 @@ export default class Scaner{
             return{
                 id: obj.id,
                 x: obj.x-startX,
-                y: obj.y-startY
+                y: obj.y-startY,
+                angle:0
             }
         });
         
@@ -138,7 +140,8 @@ export default class Scaner{
                 this.dots.push({
                     id: createId(8),
                     x:i,
-                    y:j
+                    y:j,
+                    angle:0
                 });
                 renderDots.push({
                     id: createId(8),
@@ -215,8 +218,8 @@ export default class Scaner{
     }
 
     simpleScane(){
-        const stepX = 8;
-        const stepY = 8;
+        const stepX = 7;
+        const stepY = 7;
         this.circle = new Path2D();
         let isDot = false;
         for(let y=0; y<=this.scene.height; y++){
@@ -247,13 +250,15 @@ export default class Scaner{
                         this.dots.push({
                             id: createId(8),
                             x:x-step,
-                            y:y
+                            y:y,
+                            angle:0
                         });
                     }else{
                         this.dots.push({
                             id: createId(8),
                             x:x+stepX/2,
-                            y:y
+                            y:y,
+                            angle:0
                         });
                     }
                     isDot = true;
@@ -323,7 +328,8 @@ export default class Scaner{
                         this.dots.push({
                             id: createId(8),
                             x,
-                            y:compY
+                            y:compY,
+                            angle:0
                         });
     
                         x = x+this.step;
